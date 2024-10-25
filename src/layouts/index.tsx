@@ -1,21 +1,16 @@
-import { Link, Outlet } from 'umi';
-import styles from './index.less';
+import React from 'react';
+import { Outlet } from 'umi';
+import HeaderNav from '@/components/NavBar';
 
-export default function Layout() {
+const Layout: React.FC = () => {
   return (
-    <div className={styles.navs}>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/docs">Docs</Link>
-        </li>
-        <li>
-          <a href="https://github.com/umijs/umi">Github</a>
-        </li>
-      </ul>
-      <Outlet />
-    </div>
+    <>
+      <HeaderNav />
+      <div style={{ padding: '24px' }}>
+        <Outlet />
+      </div>
+    </>
   );
-}
+};
+
+export default Layout;

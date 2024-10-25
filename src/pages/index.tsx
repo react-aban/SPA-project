@@ -1,10 +1,6 @@
-
-
-export default function HomePage() {
-  return (
-    <div>
-      <h2>Yay! Welcome to umi!</h2>
-
-    </div>
-  );
-}
+const Home = () => {
+    return <h1>Welcome to the Home Page</h1>;
+  };
+  
+  export default Home;
+  
