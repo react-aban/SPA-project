@@ -1,4 +1,4 @@
-
+import { useParams } from "umi";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import UserList from "@/components/users/List";
@@ -13,29 +13,46 @@ interface User {
 }
 
 const UserApi: React.FC = () => {
-  const [users, setUsers] = useState<User[] | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  <UserList users={users || []} loading={loading} />
+  const { userId } = useParams<{ userId: string | undefined }>();
+
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        console.log(response);
-        setUsers(response.data);
+    setLoading(true);
+    const fetchUsers = async () => {
+      try {
+        let response;
+        if (userId) {
+          response = await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
+          setUsers([response.data]);
+        } else {
+          response = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+          setUsers(response.data);
+        }
         setLoading(false);
         setError(null);
-      })
-      .catch((err) => {
+      } catch (err) {
         setError(err.message);
         setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    fetchUsers();
+  }, [userId]);
 
   return (
     <>
       {error && <p>Error: {error}</p>}
-      <UserList users={users || []} loading={loading} />
+      {loading ? (
+        <>        <p>Loading...</p>
+        <UserList users={users} loading={loading} />
+        </>
+
+        
+      ) : (
+        <UserList users={users} loading={loading} />
+      )}
     </>
   );
 };
