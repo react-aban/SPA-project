@@ -5,7 +5,7 @@ export default defineConfig({
     { path: "/", component: "index" },
     { path: '/users', component: '@/pages/users/index' }, 
     { path: '/users/:userId', component: '@/pages/users/index' }, 
-    { path: '/posts', component: '@/pages/posts/List' }, 
+    { path: '/posts', component: '@/pages/posts/index' }, 
   ],
   npmClient: "pnpm",
 });
