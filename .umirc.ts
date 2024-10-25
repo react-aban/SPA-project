@@ -3,8 +3,9 @@ import { defineConfig } from "umi";
 export default defineConfig({
   routes: [
     { path: "/", component: "index" },
-    { path: '/users', component: '@/components/users/UserApi' }, 
-    { path: '/users/:userId', component: '@/components/users/UserApi' }, 
+    { path: '/users', component: '@/pages/users/index' }, 
+    { path: '/users/:userId', component: '@/pages/users/index' }, 
+    { path: '/posts', component: '@/pages/posts/List' }, 
   ],
   npmClient: "pnpm",
 });

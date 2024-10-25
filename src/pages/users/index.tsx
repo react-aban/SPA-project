@@ -1,7 +1,7 @@
 import { useParams } from "umi";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import UserList from "@/components/users/List";
+import UserList from "@/pages/users/List";
 
 interface User {
   id: number;
