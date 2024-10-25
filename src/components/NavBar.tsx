@@ -1,6 +1,6 @@
-import React from 'react';
-import { Layout, Menu } from 'antd';
-import { Link, useLocation } from 'umi';
+import React from "react";
+import { Layout, Menu } from "antd";
+import { Link, useLocation } from "umi";
 
 const { Header } = Layout;
 
@@ -10,11 +10,7 @@ const HeaderNav: React.FC = () => {
   return (
     <Layout>
       <Header>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[location.pathname]}
-        >
+        <Menu theme="dark" mode="horizontal" selectedKeys={[location.pathname]}>
           <Menu.Item key="/">
             <Link to="/">Home</Link>
           </Menu.Item>
