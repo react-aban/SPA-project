@@ -19,12 +19,14 @@ interface Photo {
 interface PostListProps {
   posts: Post[];
   photos: Photo[];
+  onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-const PostList: React.FC<PostListProps> = ({ posts, photos }) => {
+const PostList: React.FC<PostListProps> = ({ posts, photos, onDelete }) => {
   const combinedData = posts.map((post, index) => ({
     ...post,
-    pictureUrl: photos[index]?.url,
+    pictureUrl: photos[index]?.url ,
   }));
 
   const displayedUsers = combinedData.slice(0, 5);
@@ -44,11 +46,11 @@ const PostList: React.FC<PostListProps> = ({ posts, photos }) => {
       renderItem={(item) => (
         <List.Item>
           <Card
+          
             style={{ width: "100%" }}
             cover={<img alt="example" src={item.pictureUrl} />}
             actions={[
-              <EditOutlined key="edit" />,
-              <DeleteOutlined key="delete" />,
+              <DeleteOutlined key="delete" onClick={() => onDelete(item.id)} />,
             ]}
           >
             <Meta

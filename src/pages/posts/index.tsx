@@ -42,13 +42,26 @@ const PostApi: React.FC = () => {
     fetchData();
   }, []);
 
+  const handleDelete = async (id: number) => {
+    try {
+      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+      await axios.delete(`https://jsonplaceholder.typicode.com/photos/${id}`);
+
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+      setPhotos((prevPhotos) => prevPhotos.filter((photo) => photo.id !== id));
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
+
   return (
     <div>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       
       <h2>Posts</h2>
-      <PostList posts={posts} photos={photos} /> 
+      <PostList posts={posts} photos={photos} onDelete={handleDelete} />
     </div>
   );
 };
