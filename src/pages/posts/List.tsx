@@ -1,23 +1,34 @@
 import React from "react";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Card, List } from "antd";
 
 const { Meta } = Card;
 
-import { posts } from "./posts";
-import { pictures } from "./pictures";
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+}
 
-const combinedData = posts.map((post, index) => ({
-  ...post,
-  pictureUrl: pictures[index]?.url || "default-image-url.jpg",
-}));
+interface Photo {
+  id: number;
+  title: string;
+  url: string;
+}
 
-const PostList: React.FC = () => {
+interface PostListProps {
+  posts: Post[];
+  photos: Photo[];
+}
+
+const PostList: React.FC<PostListProps> = ({ posts, photos }) => {
+  const combinedData = posts.map((post, index) => ({
+    ...post,
+    pictureUrl: photos[index]?.url,
+  }));
+
   const displayedUsers = combinedData.slice(0, 5);
+
   return (
     <List
       grid={{
@@ -36,7 +47,6 @@ const PostList: React.FC = () => {
             style={{ width: "100%" }}
             cover={<img alt="example" src={item.pictureUrl} />}
             actions={[
-              <SettingOutlined key="setting" />,
               <EditOutlined key="edit" />,
               <DeleteOutlined key="delete" />,
             ]}
