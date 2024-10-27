@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import PostList from "./List";
+import PostList from "../../components/Post";
+import { fetchPosts, fetchPhotos, deletePostAndPhoto } from "@/services/PostService"; 
 import { Post, Photo } from "@/types/PostTypes";
 
 const PostApi: React.FC = () => {
@@ -14,12 +14,12 @@ const PostApi: React.FC = () => {
       try {
         setLoading(true);
         const [postsResponse, photosResponse] = await Promise.all([
-          axios.get("https://jsonplaceholder.typicode.com/posts"),
-          axios.get("https://jsonplaceholder.typicode.com/photos"),
+          fetchPosts(),
+          fetchPhotos(),
         ]);
 
-        setPosts(postsResponse.data);
-        setPhotos(photosResponse.data);
+        setPosts(postsResponse);
+        setPhotos(photosResponse);
         setError(null);
       } catch (err: any) {
         setError(err.message);
@@ -33,16 +33,15 @@ const PostApi: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
-      await axios.delete(`https://jsonplaceholder.typicode.com/photos/${id}`);
-
+      await deletePostAndPhoto(id);
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
       setPhotos((prevPhotos) => prevPhotos.filter((photo) => photo.id !== id));
     } catch (err: any) {
       setError(err.message);
     }
   };
-  const handleEdit = async (id: number) => {
+
+  const handleEdit = (id: number) => {
     const editUrl = `${location.pathname}/${id}`;
     window.open(editUrl, "_blank");
   };
@@ -51,7 +50,6 @@ const PostApi: React.FC = () => {
     <div>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-
       <h2>Posts</h2>
       <PostList
         posts={posts}

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card, Input, Button } from "antd";
-import axios from "axios";
 import { useParams, useNavigate } from "umi";
+import { fetchPostById, fetchPhotoById, updatePost } from "@/services/PostService"; 
+import { Post, Photo } from "@/types/PostTypes";
 
 const { TextArea } = Input;
-import { Post, Photo } from "@/types/PostTypes";
 
 const EditPost: React.FC = () => {
   const { postId } = useParams<{ postId: string }>();
@@ -20,11 +20,11 @@ const EditPost: React.FC = () => {
       try {
         setLoading(true);
         const [postResponse, photoResponse] = await Promise.all([
-          axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`),
-          axios.get(`https://jsonplaceholder.typicode.com/photos/${postId}`),
+          fetchPostById(postId!),
+          fetchPhotoById(postId!),
         ]);
-        setPost(postResponse.data);
-        setPhoto(photoResponse.data);
+        setPost(postResponse);
+        setPhoto(photoResponse);
       } catch (err: any) {
         setError("Failed to load post data");
       } finally {
@@ -39,10 +39,7 @@ const EditPost: React.FC = () => {
     if (!post) return;
 
     try {
-      await axios.put(
-        `https://jsonplaceholder.typicode.com/posts/${postId}`,
-        post
-      );
+      await updatePost(postId!, post);
       alert("Post updated successfully");
       navigate("/posts");
     } catch (err: any) {

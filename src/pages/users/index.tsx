@@ -1,6 +1,6 @@
 import { useParams } from "umi";
 import { useState, useEffect } from "react";
-import UserList from "@/pages/users/List";
+import UserList from "@/components/User";
 import { User } from "@/types/UserTypes";
 import { fetchUsers } from "@/api/userApi"; 
 

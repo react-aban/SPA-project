@@ -1,10 +1,9 @@
 import React from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Card, List } from "antd";
+import { PostListProps } from "@/types/PostTypes";
 
 const { Meta } = Card;
-
-import { PostListProps } from "@/types/PostTypes";
 
 const PostList: React.FC<PostListProps> = ({
   posts,
