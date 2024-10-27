@@ -10,23 +10,31 @@ interface Post {
   title: string;
   body: string;
 }
+interface Photo {
+  id: number;
+  title: string;
+  url: string;
+}
 
 const EditPost: React.FC = () => {
   const { postId } = useParams<{ postId: string }>();
   const navigate = useNavigate();
 
   const [post, setPost] = useState<Post | null>(null);
+  const [photo, setPhoto] = useState<Photo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts/${postId}`
-        );
-        setPost(response.data);
+        const [postResponse, photoResponse] = await Promise.all([
+          axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`),
+          axios.get(`https://jsonplaceholder.typicode.com/photos/${postId}`),
+        ]);
+        setPost(postResponse.data);
+        setPhoto(photoResponse.data);
       } catch (err: any) {
         setError("Failed to load post data");
       } finally {
@@ -34,7 +42,7 @@ const EditPost: React.FC = () => {
       }
     };
 
-    fetchPost();
+    fetchData();
   }, [postId]);
 
   const handleSave = async () => {
@@ -59,6 +67,7 @@ const EditPost: React.FC = () => {
     <Card
       title="Edit Post"
       bordered={false}
+      cover={photo ? <img alt={photo.title} src={photo.url} /> : null}
       style={{ width: "100%", maxWidth: 600, margin: "auto", marginTop: 20 }}
       actions={[
         <Button type="primary" onClick={handleSave} key="save">
