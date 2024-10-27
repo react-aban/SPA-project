@@ -24,10 +24,14 @@ const UserApi: React.FC = () => {
       try {
         let response;
         if (userId) {
-          response = await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
+          response = await axios.get(
+            `https://jsonplaceholder.typicode.com/users/${userId}`
+          );
           setUsers([response.data]);
         } else {
-          response = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+          response = await axios.get(
+            `https://jsonplaceholder.typicode.com/users`
+          );
           setUsers(response.data);
         }
         setLoading(false);
@@ -45,11 +49,11 @@ const UserApi: React.FC = () => {
     <>
       {error && <p>Error: {error}</p>}
       {loading ? (
-        <>        <p>Loading...</p>
-        <UserList users={users} loading={loading} />
+        <>
+          {" "}
+          <p>Loading...</p>
+          <UserList users={users} loading={loading} />
         </>
-
-        
       ) : (
         <UserList users={users} loading={loading} />
       )}
