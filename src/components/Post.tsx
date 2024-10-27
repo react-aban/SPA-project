@@ -1,32 +1,19 @@
 import React from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Card, List } from "antd";
+import { PostListProps } from "@/types/PostTypes";
 
 const { Meta } = Card;
 
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-}
-
-interface Photo {
-  id: number;
-  title: string;
-  url: string;
-}
-
-interface PostListProps {
-  posts: Post[];
-  photos: Photo[];
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
-}
-
-const PostList: React.FC<PostListProps> = ({ posts, photos, onDelete,onEdit }) => {
+const PostList: React.FC<PostListProps> = ({
+  posts,
+  photos,
+  onDelete,
+  onEdit,
+}) => {
   const combinedData = posts.map((post, index) => ({
     ...post,
-    pictureUrl: photos[index]?.url ,
+    pictureUrl: photos[index]?.url,
   }));
 
   const displayedUsers = combinedData.slice(0, 5);
@@ -46,7 +33,6 @@ const PostList: React.FC<PostListProps> = ({ posts, photos, onDelete,onEdit }) =
       renderItem={(item) => (
         <List.Item>
           <Card
-          
             style={{ width: "100%" }}
             cover={<img alt="example" src={item.pictureUrl} />}
             actions={[
