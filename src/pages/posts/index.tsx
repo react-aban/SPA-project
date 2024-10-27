@@ -53,6 +53,14 @@ const PostApi: React.FC = () => {
       setError(err.message);
     }
   };
+  const handleEdit = async (id: number) => {
+
+    const editUrl = `${location.pathname}/${id}`;
+    window.open(editUrl, '_blank');
+
+
+  };
+
 
 
   return (
@@ -61,7 +69,7 @@ const PostApi: React.FC = () => {
       {error && <p>Error: {error}</p>}
       
       <h2>Posts</h2>
-      <PostList posts={posts} photos={photos} onDelete={handleDelete} />
+      <PostList posts={posts} photos={photos} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 };

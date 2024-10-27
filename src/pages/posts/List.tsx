@@ -23,7 +23,7 @@ interface PostListProps {
   onDelete: (id: number) => void;
 }
 
-const PostList: React.FC<PostListProps> = ({ posts, photos, onDelete }) => {
+const PostList: React.FC<PostListProps> = ({ posts, photos, onDelete,onEdit }) => {
   const combinedData = posts.map((post, index) => ({
     ...post,
     pictureUrl: photos[index]?.url ,
@@ -51,6 +51,7 @@ const PostList: React.FC<PostListProps> = ({ posts, photos, onDelete }) => {
             cover={<img alt="example" src={item.pictureUrl} />}
             actions={[
               <DeleteOutlined key="delete" onClick={() => onDelete(item.id)} />,
+              <EditOutlined key="edit" onClick={() => onEdit(item.id)} />,
             ]}
           >
             <Meta
