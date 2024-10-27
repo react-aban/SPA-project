@@ -2,15 +2,7 @@ import { useParams } from "umi";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import UserList from "@/pages/users/List";
-
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-  website: string;
-}
+import { User } from "@/types/UserTypes";
 
 const UserApi: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

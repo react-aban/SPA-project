@@ -4,17 +4,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "umi";
 
 const { TextArea } = Input;
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-}
-interface Photo {
-  id: number;
-  title: string;
-  url: string;
-}
+import { Post, Photo } from "@/types/PostTypes";
 
 const EditPost: React.FC = () => {
   const { postId } = useParams<{ postId: string }>();

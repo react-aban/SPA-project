@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PostList from "./List";
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-}
-
-interface Photo {
-  id: number;
-  title: string;
-  url: string;
-}
+import { Post, Photo } from "@/types/PostTypes";
 
 const PostApi: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -54,22 +43,22 @@ const PostApi: React.FC = () => {
     }
   };
   const handleEdit = async (id: number) => {
-
     const editUrl = `${location.pathname}/${id}`;
-    window.open(editUrl, '_blank');
-
-
+    window.open(editUrl, "_blank");
   };
-
-
 
   return (
     <div>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-      
+
       <h2>Posts</h2>
-      <PostList posts={posts} photos={photos} onDelete={handleDelete} onEdit={handleEdit} />
+      <PostList
+        posts={posts}
+        photos={photos}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+      />
     </div>
   );
 };

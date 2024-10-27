@@ -1,20 +1,7 @@
 import React from "react";
 import { Link } from "umi";
 import { Card, List } from "antd";
-
-interface User {
-  id: number; 
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-  website: string;
-}
-
-interface UserListProps {
-  users: User[];
-  loading: boolean;
-}
+import { UserListProps } from "@/types/UserTypes";
 
 const UserList: React.FC<UserListProps> = ({ users, loading }) => {
   return (
@@ -31,10 +18,10 @@ const UserList: React.FC<UserListProps> = ({ users, loading }) => {
       dataSource={users}
       renderItem={(user) => (
         <List.Item>
-          <Card 
-            loading={loading} 
-            title={user.name} 
-            extra={<Link to={`/users/${user.id}`}>Details</Link>} 
+          <Card
+            loading={loading}
+            title={user.name}
+            extra={<Link to={`/users/${user.id}`}>Details</Link>}
           >
             <p>Username: {user.username}</p>
             <p>Email: {user.email}</p>
